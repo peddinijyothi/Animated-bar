@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #bigBox {
+      display: flex;
+      position: relative;
+      width: 700px;
+      height: 200px;
+      border: 10px solid black;
+      overflow: hidden;
+      background-color: black;
+      align-items: flex-end;
+    }
+
+    .colorBar {
+      flex: 1;
+      height: 100%;
+      transition: height 0.7s ease-in-out;
+      transform-origin: bottom; /* Use 'bottom' to make bars move upwards */
+    }
+
+    .colorBar:nth-child(1) {
+      background-color: blue;
+    }
+
+    .colorBar:nth-child(2) {
+      background-color: violet;
+    }
+
+    .colorBar:nth-child(3) {
+      background-color: pink;
+    }
+
+    .colorBar:nth-child(4) {
+      background-color: orange;
+    }
+
+    .colorBar:nth-child(5) {
+      background-color: yellow;
+    }
+
+    .buttons {
+      display: flex;
+      margin-top: 50px;
+      gap: 80px;
+    }
+
+    #startBtn,
+    #resetBtn,
+    #stopBtn {
+      cursor: pointer;
+      color: white;
+      border: none;
+      padding: 5px 30px;
+      font-size: 15px;
+      margin-right: 50px;
+    }
+
+    #startBtn {
+      background-color: green;
+    }
+
+    #resetBtn {
+      background-color: purple;
+    }
+
+    #stopBtn {
+      background-color: red;
+    }
+  </style>
+  <title>Animated Bars</title>
+</head>
+<body>
+  <div id="bigBox">
+    <div class="colorBar" id="bar1"></div>
+    <div class="colorBar" id="bar2"></div>
+    <div class="colorBar" id="bar3"></div>
+    <div class="colorBar" id="bar4"></div>
+    <div class="colorBar" id="bar5"></div>
+  </div>
+  <div class="buttons">
+    <button id="startBtn" onclick="startAnimation()">Start</button>
+    <button id="resetBtn" onclick="resetAnimation()">Reset</button>
+    <button id="stopBtn" onclick="stopAnimation()">Stop</button>
+  </div>
+
+  <script>
+    const initialHeights = Array(5).fill(100); // Array to store initial heights
+    let currentHeights = [...initialHeights];
+    let animationStarted = false;
+
+    function getRandomHeight() {
+      // Generate a random height between 1 and 100
+      return Math.floor(Math.random() * 100) + 1;
+    }
+
+    function applyHeights() {
+      const bars = document.querySelectorAll('.colorBar');
+      bars.forEach((bar, index) => {
+        bar.style.height = `${currentHeights[index]}%`;
+      });
+    }
+
+    function changeHeights() {
+      if (animationStarted) {
+        currentHeights = Array.from({ length: 5 }, getRandomHeight
+        applyHeights();
+        setTimeout(changeHeights, 600); // Change heights every second
+      }
+    }
+
+    function startAnimation() {
+      if (!animationStarted) {
+        animationStarted = true;
+        changeHeights();
+      }
+    }
+
+    function resetAnimation() {
+      currentHeights = [...initialHeights];
+      applyHeights();
+      animationStarted = false;
+    }
+
+    function stopAnimation() {
+      animationStarted = false;
+    }
+  </script>
+</body>
+</html>
